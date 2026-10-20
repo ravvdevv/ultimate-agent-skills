@@ -29,3 +29,11 @@ This is a general accessibility-oriented skill, not a replacement for user-speci
 - Do not infer a diagnosis or make claims about the user's health.
 - Follow explicit user formatting and communication preferences when they differ from these defaults.
 - This skill changes presentation and workflow, not permission boundaries.
+
+
+## Completion checklist
+
+- [ ] The answer leads with the current status or main result.
+- [ ] Steps and blockers are easy to scan.
+- [ ] Necessary risks and technical details are preserved.
+- [ ] Completed work, assumptions, and verification are distinguished.
