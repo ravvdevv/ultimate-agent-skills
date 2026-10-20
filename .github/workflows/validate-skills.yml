@@ -4,12 +4,16 @@ on:
   push:
     paths:
       - "skills/**"
+      - "evals/**"
       - "scripts/validate_skills.py"
+      - "scripts/validate_evals.py"
       - ".github/workflows/validate-skills.yml"
   pull_request:
     paths:
       - "skills/**"
+      - "evals/**"
       - "scripts/validate_skills.py"
+      - "scripts/validate_evals.py"
       - ".github/workflows/validate-skills.yml"
   workflow_dispatch:
 
@@ -28,3 +32,5 @@ jobs:
           python-version: "3.12"
       - name: Validate skill structure
         run: python scripts/validate_skills.py
+      - name: Validate evaluation cases
+        run: python scripts/validate_evals.py
