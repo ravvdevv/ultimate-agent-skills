@@ -5,10 +5,9 @@ These are portable `SKILL.md` workflows, not a standalone application. Clone thi
 ## 1. Get the repository
 
 ```bash
-git clone https://github.com/ravvdevv/ultimate-agent-skills.git
-cd ultimate-agent-skills
-# From the project you want to equip, set the path to this clone:
-# SKILLS_REPO="../ultimate-agent-skills"
+# Run from the root of the project you want to equip:
+git clone https://github.com/ravvdevv/ultimate-agent-skills.git ../ultimate-agent-skills
+# Then run one of the install commands below from this project root.
 ```
 
 ## 2. Choose your agent
