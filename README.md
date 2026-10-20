@@ -30,6 +30,24 @@ See [UPSTREAMS.md](UPSTREAMS.md) for the recommended use of Humanizer, UI/UX Pro
 
 This repository does **not** bundle upstream CLIs, browser tooling, hooks, specialist agents, or design-data assets unless a skill explicitly says so. Caveman Ultra, Ponytail Ultra, and i-have-adhd remain separate behavior skills installed in the target agent environment; they are not automatically installed by this repository.
 
+## Installation
+
+See [INSTALLATION.md](INSTALLATION.md) for copy-paste setup instructions for Claude Code, OpenAI Codex, OpenCode, Cursor, and Windows PowerShell.
+
+For example, install all skills into the current project's Codex directory from the repository root:
+
+```bash
+mkdir -p .agents/skills
+for src in skills/*; do
+  [ -f "$src/SKILL.md" ] || continue
+  name="$(basename "$src")"
+  mkdir -p ".agents/skills/$name"
+  cp "$src/SKILL.md" ".agents/skills/$name/SKILL.md"
+done
+```
+
+You can also install individual skills instead of copying the whole collection. Use the destination directory documented by your agent; the folder names differ between runtimes.
+
 ## Using a skill
 
 Read the relevant `SKILL.md` and follow its workflow when the task matches. Treat skill instructions as guidance for the task, not as permission to ignore system, developer, user, or repository instructions.
