@@ -51,15 +51,15 @@ def parse_frontmatter(path: Path) -> dict[str, str] | None:
     return fields
 
 
-def validate_skill(path: Path) -> None:
+def validate_skill(path: Path) -> dict[str, str] | None:
     try:
         path.resolve(strict=True).relative_to(SKILLS_DIR.resolve())
     except (OSError, ValueError):
         error(path, "skill file resolves outside the skills directory or is missing")
-        return
+        return None
     fields = parse_frontmatter(path)
     if fields is None:
-        return
+        return None
 
     folder_name = path.parent.name
     name = fields.get("name", "")
@@ -79,7 +79,7 @@ def validate_skill(path: Path) -> None:
         lines = path.read_text(encoding="utf-8").splitlines()
         end = lines.index("---", 1)
     except (OSError, UnicodeError, ValueError):
-        return
+        return fields
     body = "\n".join(lines[end + 1 :])
     checks = (
         (r"^#\s+\S", "missing top-level Markdown title"),
@@ -90,6 +90,7 @@ def validate_skill(path: Path) -> None:
     for pattern, message in checks:
         if not re.search(pattern, body, re.MULTILINE | re.IGNORECASE):
             error(path, message)
+    return fields
 
 
 def strip_fenced_code(content: str) -> str:
@@ -152,8 +153,7 @@ def main() -> int:
         if not path.is_file():
             error(directory, "skill directory is missing SKILL.md")
             continue
-        validate_skill(path)
-        fields = parse_frontmatter(path)
+        fields = validate_skill(path)
         if fields is None:
             continue
         name = fields.get("name", "")
