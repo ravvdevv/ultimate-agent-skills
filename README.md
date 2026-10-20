@@ -34,11 +34,12 @@ This repository does **not** bundle upstream CLIs, browser tooling, hooks, speci
 
 See [INSTALLATION.md](INSTALLATION.md) for copy-paste setup instructions for Claude Code, OpenAI Codex, OpenCode, Cursor, and Windows PowerShell.
 
-For example, install all skills into the current project's Codex directory from the repository root:
+For example, from the root of the project you want to equip (assuming the skills repo is at `../ultimate-agent-skills`), install all skills into Codex:
 
 ```bash
+SKILLS_REPO="../ultimate-agent-skills"
 mkdir -p .agents/skills
-for src in skills/*; do
+for src in "$SKILLS_REPO"/skills/*; do
   [ -f "$src/SKILL.md" ] || continue
   name="$(basename "$src")"
   mkdir -p ".agents/skills/$name"
