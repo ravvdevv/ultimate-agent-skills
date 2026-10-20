@@ -1,33 +1,34 @@
 ---
 name: qa-release
-description: Verify a feature or release with risk-based tests, regression checks, and explicit evidence before claiming it is ready. Use before shipping changes, cutting a release, or closing implementation work.
+description: Assess release readiness with risk-based regression checks and artifact validation before shipping a change or release.
 ---
 
 # QA and Release
 
-A portable quality gate inspired by common engineering workflows, including gstack and selected engineering practices from ECC. It does not bundle their runtime tools.
+Use for release readiness, packaging, or changes with meaningful cross-feature regression risk. For an ordinary completion claim, use verification-before-completion without repeating a full release checklist.
 
 ## Workflow
 
-1. **Establish the change.** Inspect the diff, project instructions, release notes, versioning rules, and deployment or packaging scripts.
-2. **List the risks.** Identify changed user flows, APIs, schemas, authentication boundaries, platform-specific behavior, and destructive operations.
-3. **Choose focused checks.** Run the smallest relevant unit, integration, type, lint, build, and end-to-end checks available. Add regression coverage for fixed bugs.
-4. **Exercise critical paths.** Test normal, invalid, empty, permission-denied, offline, and failure states when relevant.
-5. **Inspect the final diff.** Look for accidental files, secrets, generated artifacts, unrelated edits, debug code, and mismatched version or changelog entries.
-6. **Verify release artifacts.** If producing a build, confirm the expected file exists, has plausible size/type, and matches the intended version and platform. Test installation or launch when feasible.
-7. **Report evidence.** List each command/check and its actual result. Separate passed, failed, skipped, and not-applicable checks.
-8. **Ship only within scope.** Do not publish, deploy, tag, or create a release unless requested or already authorized by the user's explicit task.
+1. **Establish release scope.** Inspect the diff, project instructions, release notes, versioning rules, and packaging or deployment configuration.
+2. **Prioritize risks.** Identify affected user flows, APIs, schemas, authentication boundaries, platform-specific behavior, data loss, and irreversible operations.
+3. **Choose checks by risk.** Run the smallest relevant unit, integration, type, lint, build, and end-to-end checks available. Expand coverage when impact or uncertainty warrants it.
+4. **Exercise critical paths.** Check normal and relevant invalid, empty, permission-denied, offline, and partial-failure states.
+5. **Inspect the release diff.** Look for unrelated files, secrets, generated artifacts, debug code, version mismatches, and changelog gaps.
+6. **Verify artifacts.** Confirm expected files, type, plausible size, version, and platform. Test installation or launch when feasible.
+7. **Report a gate decision.** List checks as passed, failed, skipped, or not applicable, with actual evidence. State blockers and residual risks.
+8. **Respect the release boundary.** Do not publish, deploy, tag, or create a release unless explicitly requested or already authorized.
 
 ## Guardrails
 
-- A successful build is not proof that runtime behavior works.
-- Do not say "tested" when only reading code; do not say "released" when only preparing artifacts.
+- A successful build does not prove runtime behavior or release readiness.
+- Do not repeat generic completion checks when verification-before-completion already covers the task; focus here on release-specific risk and artifacts.
 - Never expose secrets in logs, screenshots, or reports.
-- For failed checks, provide the failure and next diagnostic step rather than hiding it.
+- For failed checks, report the failure and next diagnostic step rather than hiding it.
+- If release requirements or credentials are unavailable, report the blocker and do not imply the release shipped.
 
 ## Completion checklist
 
-- [ ] Relevant tests and build checks were attempted.
-- [ ] Final diff and release metadata were reviewed.
-- [ ] Artifact verification is reported accurately.
-- [ ] Deployment or publication status is explicit.
+- [ ] Release-specific risks and affected paths identified.
+- [ ] Relevant regression and artifact checks reported accurately.
+- [ ] Blocking failures and residual risks are explicit.
+- [ ] Publication/deployment status is explicit.
