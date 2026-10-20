@@ -1,122 +1,141 @@
 # Installation
 
-These are portable `SKILL.md` workflows, not a standalone application. Clone this repository anywhere convenient, then run the copy commands from the root of the project you want to equip. The examples assume the clone is next to your project at `../ultimate-agent-skills`; adjust `SKILLS_REPO` if you cloned it elsewhere. Project-level installs are shared with that project; user-level installs are available across projects.
+The recommended method is the open-source `skills` CLI, which discovers skills in this repository and installs them to supported coding agents. Manual copy instructions are available below if you cannot use the CLI.
 
-## 1. Get the repository
+## Recommended: skills CLI
+
+Requires Node.js/npm and internet access.
 
 ```bash
-# Run from the root of the project you want to equip:
-git clone https://github.com/ravvdevv/ultimate-agent-skills.git ../ultimate-agent-skills
-# Then run one of the install commands below from this project root.
+# List the available skills before installing
+npx skills add ravvdevv/ultimate-agent-skills --list
+
+# Install interactively and choose the agent(s) and scope
+npx skills add ravvdevv/ultimate-agent-skills
+
+# Install a specific skill
+npx skills add ravvdevv/ultimate-agent-skills --skill debugging
+
+# Install all skills for one agent (example: Codex)
+npx skills add ravvdevv/ultimate-agent-skills --skill '*' --agent codex
+
+# Install all skills across all detected/supported agents
+npx skills add ravvdevv/ultimate-agent-skills --all
+
+# Check for updates to installed skills
+npx skills check
+npx skills update
 ```
 
-## 2. Choose your agent
+The CLI's supported agent identifiers and options can change; check its current help with `npx skills --help`. Use interactive installation if you are unsure which identifier to use. Review skills before installing them in sensitive environments.
+
+## Install through your coding agent
+
+Paste this prompt into the agent you want to configure:
+
+```text
+Install skills from https://github.com/ravvdevv/ultimate-agent-skills.
+
+1. Identify this agent and inspect its current official skills documentation.
+2. Prefer the supported `skills` CLI and show me the proposed target agent and scope before making changes. If the CLI is unavailable, follow the manual instructions in INSTALLATION.md.
+3. List the available skills and install only the ones requested, unless I explicitly ask for all.
+4. Do not overwrite existing skill files silently. Compare conflicts and ask before replacing custom content.
+5. Verify installed paths and report exact skill names, destination, and any reload/restart steps.
+6. Do not run unrelated scripts or claim success without checking the resulting files.
+```
+
+## Manual installation
+
+These examples install files into the current project's root. Clone this repository beside the project first, or adjust `SKILLS_REPO` to the actual path. Run commands from the project root.
 
 ### Claude Code
 
-Project-level:
-
 ```bash
-SKILLS_REPO="../ultimate-agent-skills" # adjust this path if needed
+SKILLS_REPO="../ultimate-agent-skills"
 mkdir -p .claude/skills
 for src in "$SKILLS_REPO"/skills/*; do
   [ -f "$src/SKILL.md" ] || continue
   name="$(basename "$src")"
-  mkdir -p ".claude/skills/$name"
-  cp "$src/SKILL.md" ".claude/skills/$name/SKILL.md"
+  dest=".claude/skills/$name/SKILL.md"
+  mkdir -p "$(dirname "$dest")"
+  if [ -e "$dest" ]; then echo "Skipping existing file: $dest"; continue; fi
+  cp "$src/SKILL.md" "$dest"
 done
 ```
 
-User-level destination: `~/.claude/skills/<skill-name>/SKILL.md`.
-
 ### OpenAI Codex
 
-Project-level:
-
 ```bash
-SKILLS_REPO="../ultimate-agent-skills" # adjust this path if needed
+SKILLS_REPO="../ultimate-agent-skills"
 mkdir -p .agents/skills
 for src in "$SKILLS_REPO"/skills/*; do
   [ -f "$src/SKILL.md" ] || continue
   name="$(basename "$src")"
-  mkdir -p ".agents/skills/$name"
-  cp "$src/SKILL.md" ".agents/skills/$name/SKILL.md"
+  dest=".agents/skills/$name/SKILL.md"
+  mkdir -p "$(dirname "$dest")"
+  if [ -e "$dest" ]; then echo "Skipping existing file: $dest"; continue; fi
+  cp "$src/SKILL.md" "$dest"
 done
 ```
 
-User-level destination: `~/.agents/skills/<skill-name>/SKILL.md`.
-
 ### OpenCode
 
-Project-level:
-
 ```bash
-SKILLS_REPO="../ultimate-agent-skills" # adjust this path if needed
+SKILLS_REPO="../ultimate-agent-skills"
 mkdir -p .opencode/skill
 for src in "$SKILLS_REPO"/skills/*; do
   [ -f "$src/SKILL.md" ] || continue
   name="$(basename "$src")"
-  mkdir -p ".opencode/skill/$name"
-  cp "$src/SKILL.md" ".opencode/skill/$name/SKILL.md"
+  dest=".opencode/skill/$name/SKILL.md"
+  mkdir -p "$(dirname "$dest")"
+  if [ -e "$dest" ]; then echo "Skipping existing file: $dest"; continue; fi
+  cp "$src/SKILL.md" "$dest"
 done
 ```
 
-User-level destination: `~/.config/opencode/skill/<skill-name>/SKILL.md`.
-
 ### Cursor
 
-Project-level:
-
 ```bash
-SKILLS_REPO="../ultimate-agent-skills" # adjust this path if needed
+SKILLS_REPO="../ultimate-agent-skills"
 mkdir -p .cursor/skills
 for src in "$SKILLS_REPO"/skills/*; do
   [ -f "$src/SKILL.md" ] || continue
   name="$(basename "$src")"
-  mkdir -p ".cursor/skills/$name"
-  cp "$src/SKILL.md" ".cursor/skills/$name/SKILL.md"
+  dest=".cursor/skills/$name/SKILL.md"
+  mkdir -p "$(dirname "$dest")"
+  if [ -e "$dest" ]; then echo "Skipping existing file: $dest"; continue; fi
+  cp "$src/SKILL.md" "$dest"
 done
 ```
 
-User-level destination: `~/.cursor/skills/<skill-name>/SKILL.md`.
-
-## 3. Install only selected skills
-
-Instead of copying every skill, copy just the directory you need. For example, to install Code Review into Codex for the current project:
-
-```bash
-SKILLS_REPO="../ultimate-agent-skills" # adjust this path if needed
-mkdir -p .agents/skills/code-review
-cp "$SKILLS_REPO/skills/code-review/SKILL.md" .agents/skills/code-review/SKILL.md
-```
-
-Replace `code-review` with `debugging`, `research`, `humanizer`, `product-planning`, `frontend-design-review`, `qa-release`, or `attention-friendly`.
-
-## Windows PowerShell example
-
-This example installs all skills into the current project's Codex directory. Change `.agents/skills` to the target path for your agent if needed.
+### Windows PowerShell (Codex example)
 
 ```powershell
-$skillsRepo = "..\ultimate-agent-skills" # adjust this path if needed
+$skillsRepo = "..\ultimate-agent-skills"
 $target = ".agents/skills"
 Get-ChildItem (Join-Path $skillsRepo "skills") -Directory | ForEach-Object {
   $source = Join-Path $_.FullName "SKILL.md"
-  if (Test-Path $source) {
-    $destination = Join-Path (Join-Path $target $_.Name) "SKILL.md"
-    New-Item -ItemType Directory -Force -Path (Split-Path $destination) | Out-Null
-    Copy-Item $source $destination -Force
+  if (-not (Test-Path $source)) { return }
+  $destination = Join-Path (Join-Path $target $_.Name) "SKILL.md"
+  if (Test-Path $destination) {
+    Write-Host "Skipping existing file: $destination"
+    return
   }
+  New-Item -ItemType Directory -Force -Path (Split-Path $destination) | Out-Null
+  Copy-Item $source $destination
 }
 ```
 
-## 4. Verify installation
+For user-level installations, use the agent's documented user skills directory instead of a project-local directory. Verify the exact path against current official documentation before installing; agent conventions are not interchangeable.
 
-Confirm the destination contains one folder per installed skill, each with a `SKILL.md` file. Restart or reload your agent if it does not discover new skills automatically. Ask it to list the skills it can access, then try a task that clearly matches one.
+## Verify and update
 
-## Notes
+- Confirm each installed skill has a `SKILL.md` file in the expected destination.
+- Ask the agent to list the skills it can access and try a task matching one.
+- Reload or restart the agent if required by its documentation.
+- With the CLI, use `npx skills check` and `npx skills update` to inspect and apply available updates.
+- With manual copies, pull the latest repository changes and copy only the intended files. The manual examples skip existing files to protect local edits.
 
-- Install skills into the host's documented directory. Similar-looking paths are not interchangeable; for example, OpenCode uses `skill` (singular) in its documented directory.
-- These files provide instructions. They do not install upstream CLIs, browser automation, hooks, specialist agents, or design-data assets referenced in [UPSTREAMS.md](UPSTREAMS.md).
-- Caveman Ultra, Ponytail Ultra, and i-have-adhd remain separate third-party behavior skills and must be installed/configured separately in the host that supports them.
-- Review [UPSTREAMS.md](UPSTREAMS.md) and each upstream project's license before installing or redistributing external tooling.
-- To update your installed copies, pull the latest repository changes and copy the relevant `SKILL.md` files again.
+## Scope and upstream notes
+
+These are portable instruction files. They do not automatically install external CLIs, browser automation, hooks, specialist agents, or design-data assets mentioned in [UPSTREAMS.md](UPSTREAMS.md). Caveman Ultra, Ponytail Ultra, and i-have-adhd remain separate behavior skills and must be installed/configured separately in a compatible host.
