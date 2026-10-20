@@ -1,62 +1,43 @@
 # Ultimate Agent Skills
 
-A curated collection of practical, reusable skills for coding agents. Designed to be portable across agent runtimes and useful in real projects, not just impressive in a README.
+Reusable workflows for coding agents: code review, debugging, research, humanizing prose, product planning, frontend review, QA/release, and attention-friendly execution.
 
-## Principles
+**Repository:** https://github.com/ravvdevv/ultimate-agent-skills
 
-- **Verify, don't guess.** Inspect the repository and environment before changing things.
-- **Small, reversible changes.** Prefer focused patches over sweeping rewrites.
-- **Evidence over confidence.** Run relevant checks and report what actually passed.
-- **Respect the project.** Follow existing conventions and avoid unrelated edits.
-- **Be explicit about limits.** Never claim a tool ran, a test passed, or a change shipped unless it did.
-- **Curate, don't hoard.** Prefer focused portable workflows and link to upstream projects when their runtime or data assets are needed.
+## Install with your AI agent
 
-## Skills
+Copy this prompt into the coding agent you want to configure:
 
-| Skill | Purpose |
-| --- | --- |
-| [Code Review](skills/code-review/SKILL.md) | Find actionable bugs, regressions, and security issues. |
-| [Debugging](skills/debugging/SKILL.md) | Trace failures from reproducible evidence to verified fixes. |
-| [Research](skills/research/SKILL.md) | Investigate questions with source quality, cross-checks, and clear uncertainty. |
-| [Humanizer](skills/humanizer/SKILL.md) | Edit generic prose while preserving meaning, voice, and supported facts. |
-| [Product Planning](skills/product-planning/SKILL.md) | Turn vague ideas into scoped plans and acceptance criteria before substantial implementation. |
-| [Frontend Design Review](skills/frontend-design-review/SKILL.md) | Review visual hierarchy, consistency, responsive behavior, accessibility, and UI states. |
-| [QA and Release](skills/qa-release/SKILL.md) | Verify changes and release artifacts with evidence-based quality gates. |
-| [Attention-Friendly](skills/attention-friendly/SKILL.md) | Keep responses and multi-step work clear, scannable, and resumable. |
+```text
+Install the skills from https://github.com/ravvdevv/ultimate-agent-skills into the correct skills directory for the AI agent and current project.
 
-## Upstream integrations
+1. Identify the agent/runtime and check its current official documentation or existing project conventions to find the correct skills directory.
+2. Clone or download the repository into a temporary location. Do not put the entire repository inside the target skills directory.
+3. Install all skills from its `skills/*/SKILL.md` files into the current project, preserving each skill's folder name and placing each file at <target-skills-directory>/<skill-name>/SKILL.md.
+4. Do not overwrite existing skills silently. If a destination already exists, compare it and explain the conflict before replacing anything.
+5. Verify every copied skill and report the destination, installed skill names, and any steps needed to reload or restart the agent.
+6. Keep the change limited to skill installation. Do not install unrelated tools, run arbitrary scripts, or claim success without verifying the files.
 
-See [UPSTREAMS.md](UPSTREAMS.md) for the recommended use of Humanizer, UI/UX Pro Max, Impeccable, gstack, and Everything Claude Code (ECC), plus attribution and licensing notes.
-
-This repository does **not** bundle upstream CLIs, browser tooling, hooks, specialist agents, or design-data assets unless a skill explicitly says so. Caveman Ultra, Ponytail Ultra, and i-have-adhd remain separate behavior skills installed in the target agent environment; they are not automatically installed by this repository.
-
-## Installation
-
-See [INSTALLATION.md](INSTALLATION.md) for copy-paste setup instructions for Claude Code, OpenAI Codex, OpenCode, Cursor, and Windows PowerShell.
-
-For example, from the root of the project you want to equip (assuming the skills repo is at `../ultimate-agent-skills`), install all skills into Codex:
-
-```bash
-SKILLS_REPO="../ultimate-agent-skills"
-mkdir -p .agents/skills
-for src in "$SKILLS_REPO"/skills/*; do
-  [ -f "$src/SKILL.md" ] || continue
-  name="$(basename "$src")"
-  mkdir -p ".agents/skills/$name"
-  cp "$src/SKILL.md" ".agents/skills/$name/SKILL.md"
-done
+If this runtime does not support this skill format, explain the limitation and give the closest supported installation method instead.
 ```
 
-You can also install individual skills instead of copying the whole collection. Use the destination directory documented by your agent; the folder names differ between runtimes.
+## Install manually
 
-## Using a skill
+Read **[INSTALLATION.md](INSTALLATION.md)** for copy-paste commands for Claude Code, OpenAI Codex, OpenCode, Cursor, and Windows PowerShell.
 
-Read the relevant `SKILL.md` and follow its workflow when the task matches. Treat skill instructions as guidance for the task, not as permission to ignore system, developer, user, or repository instructions.
+## Included skills
 
-## Contributing
+- [Code Review](skills/code-review/SKILL.md)
+- [Debugging](skills/debugging/SKILL.md)
+- [Research](skills/research/SKILL.md)
+- [Humanizer](skills/humanizer/SKILL.md)
+- [Product Planning](skills/product-planning/SKILL.md)
+- [Frontend Design Review](skills/frontend-design-review/SKILL.md)
+- [QA and Release](skills/qa-release/SKILL.md)
+- [Attention-Friendly](skills/attention-friendly/SKILL.md)
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Keep skills focused, testable, tool-agnostic where possible, and honest about their assumptions.
+See [UPSTREAMS.md](UPSTREAMS.md) for related projects, integrations, and licensing notes. These skills do not automatically install upstream tools or separate behavior skills such as Caveman Ultra, Ponytail Ultra, or i-have-adhd.
 
-## License
+## Contributing and license
 
-The original content in this repository is MIT-licensed. See [LICENSE.md](LICENSE.md). Third-party projects linked in [UPSTREAMS.md](UPSTREAMS.md) retain their own licenses and notices.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Original repository content is MIT-licensed; third-party projects retain their own licenses. See [LICENSE.md](LICENSE.md).
