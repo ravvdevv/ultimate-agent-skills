@@ -10,10 +10,11 @@ Thanks for helping make these skills more useful.
 - Include safety boundaries and verification steps where relevant.
 - Do not assume a particular model, tool, operating system, or framework unless the skill says so.
 - Avoid instructions that ask agents to conceal failures, fabricate results, or bypass authorization.
+- Prefer portable workflows that work without a specific vendor's runtime. Mention optional host-specific features explicitly.
 
 ## Skill format
 
-Each skill should live in its own directory and use a `SKILL.md` file. Include frontmatter with a concise `name` and `description`, followed by when to use it, a workflow, guardrails, and completion criteria.
+Each skill should live in its own kebab-case directory and use a `SKILL.md` file with YAML frontmatter containing a unique `name` and concise `description`. Follow with a title, clear activation context, a short ordered workflow, guardrails, and a completion checklist. Keep each skill focused; use links to references instead of copying large upstream projects.
 
 ## Before submitting
 
@@ -22,3 +23,4 @@ Each skill should live in its own directory and use a `SKILL.md` file. Include f
 3. Check links and code examples.
 4. State assumptions explicitly.
 5. Keep changes limited to the contribution's purpose.
+6. Run `python scripts/validate_skills.py` and fix reported errors.
