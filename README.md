@@ -1,43 +1,62 @@
 # Ultimate Agent Skills
 
-Reusable workflows for coding agents: code review, debugging, research, humanizing prose, product planning, frontend review, QA/release, and attention-friendly execution.
+A curated set of reusable workflows that help coding agents plan, implement, debug, review, and verify real work.
 
-**Repository:** https://github.com/ravvdevv/ultimate-agent-skills
+## Install
 
-## Install with your AI agent
+**Recommended: use the open skills CLI.** It handles supported agent destinations and lets you select which skills to install.
 
-Copy this prompt into the coding agent you want to configure:
+```bash
+# List available skills first
+npx skills add ravvdevv/ultimate-agent-skills --list
 
-```text
-Install the skills from https://github.com/ravvdevv/ultimate-agent-skills into the correct skills directory for the AI agent and current project.
+# Install interactively
+npx skills add ravvdevv/ultimate-agent-skills
 
-1. Identify the agent/runtime and check its current official documentation or existing project conventions to find the correct skills directory.
-2. Clone or download the repository into a temporary location. Do not put the entire repository inside the target skills directory.
-3. Install all skills from its `skills/*/SKILL.md` files into the current project, preserving each skill's folder name and placing each file at <target-skills-directory>/<skill-name>/SKILL.md.
-4. Do not overwrite existing skills silently. If a destination already exists, compare it and explain the conflict before replacing anything.
-5. Verify every copied skill and report the destination, installed skill names, and any steps needed to reload or restart the agent.
-6. Keep the change limited to skill installation. Do not install unrelated tools, run arbitrary scripts, or claim success without verifying the files.
+# Install all skills for a specific agent
+npx skills add ravvdevv/ultimate-agent-skills --skill '*' --agent codex
 
-If this runtime does not support this skill format, explain the limitation and give the closest supported installation method instead.
+# Install one skill
+npx skills add ravvdevv/ultimate-agent-skills --skill verification-before-completion
 ```
 
-## Install manually
+Replace `codex` with the agent identifier supported by the CLI. Run `npx skills --help` for current options. Review a skill before installing it, especially in work environments with sensitive code or credentials.
 
-Read **[INSTALLATION.md](INSTALLATION.md)** for copy-paste commands for Claude Code, OpenAI Codex, OpenCode, Cursor, and Windows PowerShell.
+Want an agent to handle setup? Paste this into your coding agent:
+
+```text
+Install skills from https://github.com/ravvdevv/ultimate-agent-skills.
+
+First inspect the repository and the current official installation instructions for this agent. Prefer the supported skills CLI when available; otherwise use the repository's INSTALLATION.md. Ask before overwriting existing skills, install only into the intended project or user scope, and verify the resulting files. Do not install unrelated tools or claim success without checking the result.
+```
+
+Manual and Windows instructions: [INSTALLATION.md](INSTALLATION.md).
 
 ## Included skills
 
-- [Code Review](skills/code-review/SKILL.md)
-- [Debugging](skills/debugging/SKILL.md)
-- [Research](skills/research/SKILL.md)
-- [Humanizer](skills/humanizer/SKILL.md)
-- [Product Planning](skills/product-planning/SKILL.md)
-- [Frontend Design Review](skills/frontend-design-review/SKILL.md)
-- [QA and Release](skills/qa-release/SKILL.md)
-- [Attention-Friendly](skills/attention-friendly/SKILL.md)
+### Engineering
+- [Test-Driven Development](skills/test-driven-development/SKILL.md): use a red-green-refactor loop for behavior changes.
+- [Debugging](skills/debugging/SKILL.md): reproduce failures and isolate root causes.
+- [Code Review](skills/code-review/SKILL.md): find actionable correctness, security, and regression issues.
+- [Verification Before Completion](skills/verification-before-completion/SKILL.md): ground completion claims in fresh evidence.
+- [QA and Release](skills/qa-release/SKILL.md): verify changes and release readiness with risk-based checks.
 
-See [UPSTREAMS.md](UPSTREAMS.md) for related projects, integrations, and licensing notes. These skills do not automatically install upstream tools or separate behavior skills such as Caveman Ultra, Ponytail Ultra, or i-have-adhd.
+### Planning and product
+- [Brainstorming](skills/brainstorming/SKILL.md): clarify important decisions before substantial implementation.
+- [Product Planning](skills/product-planning/SKILL.md): turn feature ideas into scoped, testable plans.
 
-## Contributing and license
+### Research, writing, and design
+- [Research](skills/research/SKILL.md): answer research questions with credible sources and explicit uncertainty.
+- [Humanizer](skills/humanizer/SKILL.md): improve naturalness without changing meaning.
+- [Frontend Design Review](skills/frontend-design-review/SKILL.md): review responsive behavior, accessibility, and visual quality.
+- [Attention-Friendly](skills/attention-friendly/SKILL.md): make long tasks easier to resume and manage.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Original repository content is MIT-licensed; third-party projects retain their own licenses. See [LICENSE.md](LICENSE.md).
+## Design principles
+
+- Focused workflows, not a pile of generic instructions.
+- Inspect the existing project before proposing or changing it.
+- Prefer evidence over confident guesses.
+- Keep steps proportional to task size and risk.
+- Preserve user changes, avoid destructive actions, and report limitations honestly.
+
+See [skills/README.md](skills/README.md) for the catalog, [UPSTREAMS.md](UPSTREAMS.md) for related projects and licensing notes, and [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines. Original repository content is MIT-licensed; upstream projects retain their own licenses. See [LICENSE.md](LICENSE.md).
