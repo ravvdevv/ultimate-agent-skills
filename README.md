@@ -25,6 +25,20 @@ npx skills add ravvdevv/ultimate-agent-skills --all
 
 Use the interactive command if you're unsure which agent or scope to select. CLI options can change, so check `npx skills --help` for current usage. The CLI is third-party code; review and pin it for sensitive environments, and install only the skills you need. See [installation and security guidance](INSTALLATION.md).
 
+## Trigger the full workflow with a slash command
+
+The `ultimate-agent-skills` dispatcher can be invoked as `/ultimate-agent-skills`. It routes your task through the relevant workflows instead of blindly applying every skill.
+
+Example:
+
+```text
+/ultimate-agent-skills Fix the login bug, add a regression test, and verify the fix.
+```
+
+For OpenCline, install the dispatcher into its Claude-compatible user skills directory. Windows and Linux/macOS commands are in [INSTALLATION.md](INSTALLATION.md). Restart or reload OpenCline if the command does not appear in the slash-command picker.
+
+The dispatcher does not install other skills or give the model new capabilities. It selects and applies relevant installed workflows, uses the tools available to the agent, and reports verification evidence.
+
 ## Let your agent install it
 
 Copy this prompt into the coding agent you want to configure:
@@ -38,6 +52,9 @@ Inspect this repository and the current official installation instructions for t
 Manual instructions, including Windows PowerShell examples: [INSTALLATION.md](INSTALLATION.md).
 
 ## Skills
+
+### Dispatcher
+- [Ultimate Agent Skills](skills/ultimate-agent-skills/SKILL.md): route a task through relevant workflows and verify the outcome.
 
 ### Engineering
 - [Test-Driven Development](skills/test-driven-development/SKILL.md): use a red-green-refactor loop for behavior changes.
