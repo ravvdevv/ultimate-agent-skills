@@ -38,17 +38,31 @@ Install the dispatcher in OpenCline's user-level skills directory so it is avail
 
 ### Windows PowerShell
 
+This command deliberately refuses to overwrite an existing skill file. Back up or compare an existing file before replacing it.
+
 ```powershell
 $skillDir = Join-Path $HOME ".cline\skills\ultimate-agent-skills"
+$skillFile = Join-Path $skillDir "SKILL.md"
+if (Test-Path $skillFile) {
+  throw "Refusing to overwrite existing skill: $skillFile"
+}
 New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -OutFile (Join-Path $skillDir "SKILL.md")
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -OutFile $skillFile
 ```
 
 ### Linux / macOS
 
+This command deliberately refuses to overwrite an existing skill file. Back up or compare an existing file before replacing it.
+
 ```bash
-mkdir -p "$HOME/.cline/skills/ultimate-agent-skills"
-curl -fsSL "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -o "$HOME/.claude/skills/ultimate-agent-skills/SKILL.md"
+skill_dir="$HOME/.cline/skills/ultimate-agent-skills"
+skill_file="$skill_dir/SKILL.md"
+if [ -e "$skill_file" ]; then
+  printf 'Refusing to overwrite existing skill: %s\n' "$skill_file" >&2
+  exit 1
+fi
+mkdir -p "$skill_dir"
+curl -fsSL "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -o "$skill_file"
 ```
 
 Start a new task or reload OpenCline if needed, type `/` in chat, and select `/ultimate-agent-skills`. If it does not appear, open the Skills panel, confirm the dispatcher is enabled, and verify that `SKILL.md` exists at the destination path. Example:
