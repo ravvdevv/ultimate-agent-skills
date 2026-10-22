@@ -16,6 +16,9 @@ npx skills add ravvdevv/ultimate-agent-skills
 # Install one skill
 npx skills add ravvdevv/ultimate-agent-skills --skill debugging
 
+# Install the slash-command dispatcher for Cline/OpenCline
+npx skills add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills --agent cline
+
 # Install every skill for one agent
 npx skills add ravvdevv/ultimate-agent-skills --skill '*' --agent codex
 
@@ -35,7 +38,7 @@ Example:
 /ultimate-agent-skills Fix the login bug, add a regression test, and verify the fix.
 ```
 
-For OpenCline, install the dispatcher into its user skills directory (`~/.cline/skills/ultimate-agent-skills`). Windows and Linux/macOS commands are in [INSTALLATION.md](INSTALLATION.md). Restart or reload OpenCline if the command does not appear in the slash-command picker.
+For OpenCline, install the dispatcher into its user skills directory (`~/.cline/skills/ultimate-agent-skills`) and make sure Skills are enabled in Settings → Features. Windows and Linux/macOS commands are in [INSTALLATION.md](INSTALLATION.md). Start a new task or reload OpenCline if the command does not appear in the slash-command picker.
 
 The dispatcher does not install other skills or give the model new capabilities. It selects and applies relevant installed workflows, uses the tools available to the agent, and reports verification evidence.
 
