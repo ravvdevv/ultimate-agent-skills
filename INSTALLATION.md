@@ -16,6 +16,9 @@ npx skills add ravvdevv/ultimate-agent-skills
 # Install a specific skill
 npx skills add ravvdevv/ultimate-agent-skills --skill debugging
 
+# Install the slash-command dispatcher
+npx skills add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills
+
 # Install all skills for one agent (example: Codex)
 npx skills add ravvdevv/ultimate-agent-skills --skill '*' --agent codex
 
@@ -29,7 +32,34 @@ npx skills update
 
 The CLI's supported agent identifiers and options can change; check its current help with `npx skills --help`. Use interactive installation if you are unsure which identifier to use.
 
-### Security and permissions
+### OpenCline: install the slash command
+
+OpenCline supports Claude-compatible skills in `~/.claude/skills`. Install the dispatcher there to make `/ultimate-agent-skills` available across projects.
+
+### Windows PowerShell
+
+```powershell
+$skillDir = Join-Path $HOME ".claude\skills\ultimate-agent-skills"
+New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -OutFile (Join-Path $skillDir "SKILL.md")
+```
+
+### Linux / macOS
+
+```bash
+mkdir -p "$HOME/.claude/skills/ultimate-agent-skills"
+curl -fsSL "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -o "$HOME/.claude/skills/ultimate-agent-skills/SKILL.md"
+```
+
+Restart or reload OpenCline if needed, type `/` in chat, and select `/ultimate-agent-skills`. Example:
+
+```text
+/ultimate-agent-skills Fix the login bug, add a regression test, and verify the fix.
+```
+
+The dispatcher can route to other workflows only when those skills are available to the agent. Install the other skills you want to use, or install the full collection. It does not grant new model capabilities or permissions.
+
+## Security and permissions
 
 The CLI is third-party software that runs on your machine; `npx` may download code before executing it. For sensitive repositories or privileged environments, inspect the CLI's current source and package, pin a reviewed version, and review the exact skills at the repository revision you intend to install. Prefer a project-local install and the smallest skill set that meets the task. Do not run installation as administrator/root merely to avoid a permissions error, and do not expose production credentials or sensitive files to an agent while it is installing or testing skills. Skills are instructions, not a security boundary; their behavior depends on the host agent's tools and permissions.
 
