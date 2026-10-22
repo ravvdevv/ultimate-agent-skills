@@ -16,8 +16,8 @@ npx skills add ravvdevv/ultimate-agent-skills
 # Install a specific skill
 npx skills add ravvdevv/ultimate-agent-skills --skill debugging
 
-# Install the slash-command dispatcher
-npx skills add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills
+# Install the slash-command dispatcher for Cline/OpenCline
+npx skills add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills --agent cline
 
 # Install all skills for one agent (example: Codex)
 npx skills add ravvdevv/ultimate-agent-skills --skill '*' --agent codex
@@ -34,7 +34,7 @@ The CLI's supported agent identifiers and options can change; check its current 
 
 ### OpenCline: install the slash command
 
-Install the dispatcher in OpenCline's user-level skills directory so it is available across projects. Use `~/.cline/skills/ultimate-agent-skills` as the primary location; if your OpenCline build is configured to discover Claude-compatible skills instead, use `~/.claude/skills/ultimate-agent-skills`.
+Install the dispatcher in OpenCline's user-level skills directory so it is available across projects. Use `~/.cline/skills/ultimate-agent-skills` as the primary location. Official Cline documentation confirms that global skills live under `~/.cline/skills/` and enabled skills are available as slash commands. Make sure Skills are enabled in Settings → Features.
 
 ### Windows PowerShell
 
@@ -51,7 +51,7 @@ mkdir -p "$HOME/.cline/skills/ultimate-agent-skills"
 curl -fsSL "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -o "$HOME/.claude/skills/ultimate-agent-skills/SKILL.md"
 ```
 
-Restart or reload OpenCline if needed, type `/` in chat, and select `/ultimate-agent-skills`. Example:
+Start a new task or reload OpenCline if needed, type `/` in chat, and select `/ultimate-agent-skills`. If it does not appear, open the Skills panel, confirm the dispatcher is enabled, and verify that `SKILL.md` exists at the destination path. Example:
 
 ```text
 /ultimate-agent-skills Fix the login bug, add a regression test, and verify the fix.
