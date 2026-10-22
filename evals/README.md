@@ -5,8 +5,9 @@ This directory contains task prompts and scoring criteria, not benchmark results
 ## Files
 
 - `cases.jsonl`: one JSON object per line. Each case references an existing skill and defines expected behavior, failure modes, and scoring dimensions.
-- `../scripts/validate_evals.py`: offline schema and reference validation.
-- `../tests/test_validators.py`: regression tests for malformed metadata, missing skill files, broken links, unsafe skill references, and malformed evaluation cases.
+- `../scripts/validate_evals.py`: offline schema and reference validation for case definitions.
+- `../scripts/evaluate_runs.py`: validates raw run records and summarizes paired baseline/full results without estimating missing telemetry.
+- `../tests/test_validators.py` and `../tests/test_evaluate_runs.py`: regression tests for repository validation and evaluation-run parsing/reporting.
 
 ## Run the offline checks
 
@@ -18,7 +19,27 @@ python scripts/validate_evals.py
 python -m unittest discover -s tests -v
 ```
 
-These checks use the Python standard library only. They validate repository structure and validator behavior; they do not execute agent skills or measure task quality.
+These checks use the Python standard library only. They validate repository structure, evaluation-case integrity, and evaluation-report calculations; they do not execute agent skills or measure task quality.
+
+## Validate and summarize real runs
+
+Save one JSON object per completed trial to a local JSONL file. Keep raw outputs and sensitive repository details private; do not commit them unless they are reviewed and safe to publish.
+
+```json
+{"case_id":"dispatcher-loads-and-routes-skills","condition":"baseline","trial_id":"1","task_success":false,"dimension_scores":{"workflow_adherence":1,"verification":0},"evidence_notes":{"verification":"No test command was run."},"elapsed_seconds":81,"tokens_in":12000,"tokens_out":1700,"tool_calls":12,"unsupported_claims":1,"safety_violations":[]}
+{"case_id":"dispatcher-loads-and-routes-skills","condition":"full","trial_id":"1","task_success":true,"dimension_scores":{"workflow_adherence":2,"verification":2},"evidence_notes":{"verification":"Focused regression test ran and passed; output recorded."},"elapsed_seconds":96,"tokens_in":14500,"tokens_out":2100,"tool_calls":15,"unsupported_claims":0,"safety_violations":[]}
+```
+
+The values above are **format examples only**, not results from this project. Replace them with observed measurements; never reuse example values as benchmark evidence. Required fields are `case_id`, `condition` (`baseline`, `full`, or `simplified`), `trial_id`, boolean `task_success`, `dimension_scores` (each score must be integer 0, 1, or 2), and `evidence_notes`. Optional telemetry fields can be omitted or set to `null` when unavailable. Include `safety_violations` as a list of observed issues.
+
+Run the reporter:
+
+```bash
+python scripts/evaluate_runs.py path/to/private-runs.jsonl
+python scripts/evaluate_runs.py path/to/private-runs.jsonl --json
+```
+
+The tool rejects malformed records and duplicate `(case_id, condition, trial_id)` runs. It reports task-success rates, per-dimension means, available efficiency telemetry, unsupported claims, safety violations, and paired full-vs-baseline success deltas. Unmatched pairs and missing telemetry remain explicit; missing values are never silently treated as zero. This is descriptive analysis, not causal proof or statistical significance testing.
 
 ## Paired evaluation protocol
 

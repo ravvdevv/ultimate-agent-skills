@@ -7,6 +7,7 @@ on:
       - "evals/**"
       - "scripts/validate_skills.py"
       - "scripts/validate_evals.py"
+      - "scripts/evaluate_runs.py"
       - "tests/**"
       - ".github/workflows/validate-skills.yml"
   pull_request:
@@ -15,6 +16,7 @@ on:
       - "evals/**"
       - "scripts/validate_skills.py"
       - "scripts/validate_evals.py"
+      - "scripts/evaluate_runs.py"
       - "tests/**"
       - ".github/workflows/validate-skills.yml"
   workflow_dispatch:
