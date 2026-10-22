@@ -4,6 +4,9 @@ A skill is a focused set of instructions that helps an agent perform a repeatabl
 
 ## Available skills
 
+### Dispatch
+- [Ultimate Agent Skills](ultimate-agent-skills/SKILL.md): invoke a task router with `/ultimate-agent-skills` to select relevant workflows and verify completion.
+
 ### Engineering
 - [Test-Driven Development](test-driven-development/SKILL.md): use a red-green-refactor loop for testable behavior changes.
 - [Debugging](debugging/SKILL.md): reproduce, isolate, fix, and verify a failure.
