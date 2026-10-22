@@ -40,7 +40,7 @@ Example:
 
 For OpenCline, install the dispatcher into its user skills directory (`~/.cline/skills/ultimate-agent-skills`) and make sure Skills are enabled in Settings → Features. Windows and Linux/macOS commands are in [INSTALLATION.md](INSTALLATION.md). Start a new task or reload OpenCline if the command does not appear in the slash-command picker.
 
-The dispatcher does not install other skills or give the model new capabilities. It selects and applies relevant installed workflows, uses the tools available to the agent, and reports verification evidence.
+The dispatcher does not install other skills or give the model new capabilities. It selects and applies relevant installed workflows, uses the tools available to the agent, and reports verification evidence. Slash-command aliases such as `/debug`, `/review`, and `/verify` are host-specific and are not provided by this repository unless the host registers them. Use `/ultimate-agent-skills <task>` as the documented entry point.
 
 ## Let your agent install it
 
