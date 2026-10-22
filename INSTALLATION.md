@@ -17,7 +17,7 @@ npx skills add ravvdevv/ultimate-agent-skills
 npx skills add ravvdevv/ultimate-agent-skills --skill debugging
 
 # Install the slash-command dispatcher for Cline/OpenCline
-npx skills add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills --agent cline
+opencline skill add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills --agent cline --global --copy --yes
 
 # Install all skills for one agent (example: Codex)
 npx skills add ravvdevv/ultimate-agent-skills --skill '*' --agent codex
@@ -34,7 +34,13 @@ The CLI's supported agent identifiers and options can change; check its current 
 
 ### OpenCline: install the slash command
 
-Install the dispatcher in OpenCline's user-level skills directory so it is available across projects. Use `~/.cline/skills/ultimate-agent-skills` as the primary location. Official Cline documentation confirms that global skills live under `~/.cline/skills/` and enabled skills are available as slash commands. Make sure Skills are enabled in Settings → Features.
+From a terminal, install the dispatcher globally using OpenCline's CLI:
+
+```bash
+opencline skill add ravvdevv/ultimate-agent-skills --skill ultimate-agent-skills --agent cline --global --copy --yes
+```
+
+OpenCline's current skill discovery supports both `~/.agents/skills/` and `~/.cline/skills/` for global skills. The skills CLI may install into the shared `~/.agents/skills/` store; the manual commands below install directly into `~/.cline/skills/` as a fallback. Do not overwrite an existing custom skill without comparing it first. Make sure Skills are enabled in Settings → Features, then start a new task or reload OpenCline.
 
 ### Windows PowerShell
 

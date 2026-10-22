@@ -44,7 +44,7 @@ def load_runs(path: Path) -> tuple[list[dict], list[str]]:
             errors.append(f"line {line_number}: task_success must be a boolean")
             continue
         scores = run.get("dimension_scores")
-        if not isinstance(scores, dict) or any(
+        if not isinstance(scores, dict) or not scores or any(
             not isinstance(k, str) or not k.strip() or type(v) is not int or v not in (0, 1, 2)
             for k, v in (scores.items() if isinstance(scores, dict) else [])
         ):

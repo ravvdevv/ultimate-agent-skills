@@ -60,11 +60,16 @@ class EvaluateRunsTests(unittest.TestCase):
             bad_score = run_record("baseline", True)
             bad_score["dimension_scores"]["verification"] = 3
             bad_metric = run_record("full", True, tool_calls=True)
-            path.write_text(json.dumps(bad_score) + "\n" + json.dumps(bad_metric) + "\n", encoding="utf-8")
+            empty_scores = run_record("simplified", True)
+            empty_scores["dimension_scores"] = {}
+            path.write_text(
+                json.dumps(bad_score) + "\n" + json.dumps(bad_metric) + "\n" + json.dumps(empty_scores) + "\n",
+                encoding="utf-8",
+            )
             runs, errors = EVALUATOR.load_runs(path)
             self.assertEqual(runs, [])
-            self.assertEqual(len(errors), 2)
-            self.assertTrue(any("dimension_scores" in error for error in errors))
+            self.assertEqual(len(errors), 3)
+            self.assertEqual(sum("dimension_scores" in error for error in errors), 2)
             self.assertTrue(any("tool_calls" in error for error in errors))
 
 
