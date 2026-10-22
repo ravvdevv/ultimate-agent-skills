@@ -34,12 +34,12 @@ The CLI's supported agent identifiers and options can change; check its current 
 
 ### OpenCline: install the slash command
 
-OpenCline supports Claude-compatible skills in `~/.claude/skills`. Install the dispatcher there to make `/ultimate-agent-skills` available across projects.
+Install the dispatcher in OpenCline's user-level skills directory so it is available across projects. Use `~/.cline/skills/ultimate-agent-skills` as the primary location; if your OpenCline build is configured to discover Claude-compatible skills instead, use `~/.claude/skills/ultimate-agent-skills`.
 
 ### Windows PowerShell
 
 ```powershell
-$skillDir = Join-Path $HOME ".claude\skills\ultimate-agent-skills"
+$skillDir = Join-Path $HOME ".cline\skills\ultimate-agent-skills"
 New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -OutFile (Join-Path $skillDir "SKILL.md")
 ```
@@ -47,7 +47,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ravvdevv/ultimate-agen
 ### Linux / macOS
 
 ```bash
-mkdir -p "$HOME/.claude/skills/ultimate-agent-skills"
+mkdir -p "$HOME/.cline/skills/ultimate-agent-skills"
 curl -fsSL "https://raw.githubusercontent.com/ravvdevv/ultimate-agent-skills/main/skills/ultimate-agent-skills/SKILL.md" -o "$HOME/.claude/skills/ultimate-agent-skills/SKILL.md"
 ```
 
